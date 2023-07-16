@@ -45,7 +45,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """
-        Exit the program when the end-of-file character is encountered (Ctrl + D).
+        Exit the program when the end-of-file character
+        is encountered (Ctrl + D).
 
         """
         print()
@@ -63,11 +64,15 @@ class HBNBCommand(cmd.Cmd):
         Help message for the EOF command.
 
         """
-        print("Exit the program when the end-of-file character is encountered (Ctrl + D)")
+        print(
+            "Exit the program when the end-of-file"
+            "character is encountered (Ctrl + D)"
+        )
 
     def do_create(self, arg):
         """
-        Create a new instance of BaseModel, save it (to the JSON file), and print the id.
+        Create a new instance of BaseModel, save it (to the JSON file),
+        and print the id.
 
         Usage: create <class name>
 
@@ -76,7 +81,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = arg
-        if class_name not in ["BaseModel", "Place", "State", "City", "Amenity", "Review"]:
+        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
+        if class_name not in arr:
             print("** class doesn't exist **")
             return
         new_instance = eval(class_name)()
@@ -85,7 +91,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """
-        Print the string representation of an instance based on the class name and id.
+        Print the string representation of an instance based on
+        the class name and id.
 
         Usage: show <class name> <id>
 
@@ -95,7 +102,8 @@ class HBNBCommand(cmd.Cmd):
             return
         args = arg.split()
         class_name = args[0]
-        if class_name not in ["BaseModel", "Place", "State", "City", "Amenity", "Review"]:
+        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
+        if class_name not in arr:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -111,7 +119,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """
-        Delete an instance based on the class name and id (save the change into the JSON file).
+        Delete an instance based on the class name and id
+        (save the change into the JSON file).
 
         Usage: destroy <class name> <id>
 
@@ -121,7 +130,8 @@ class HBNBCommand(cmd.Cmd):
             return
         args = arg.split()
         class_name = args[0]
-        if class_name not in ["BaseModel", "Place", "State", "City", "Amenity", "Review"]:
+        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
+        if class_name not in arr:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -144,20 +154,25 @@ class HBNBCommand(cmd.Cmd):
         """
         if arg:
             class_name = arg
-            if class_name not in ["BaseModel", "Place", "State", "City", "Amenity", "Review"]:
+            arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
+            if class_name not in arr:
                 print("** class doesn't exist **")
                 return
-            instances = [str(instance) for key, instance in storage.all().items()
-                         if class_name in key]
+            instances = [
+                str(instance) for key, instance in storage.all().items()
+                if class_name in key
+            ]
         else:
             instances = [str(instance) for instance in storage.all().values()]
         print(instances)
 
     def do_update(self, arg):
         """
-        Update an instance based on the class name and id by adding or updating attributes.
+        Update an instance based on the class name and id by
+        adding or updating attributes.
 
-        Usage: update <class name> <id> <attribute name> "<attribute value>"
+        Usage: update <class name> <id> <attribute name>
+        "<attribute value>"
 
         """
         if not arg:
@@ -165,7 +180,8 @@ class HBNBCommand(cmd.Cmd):
             return
         args = arg.split()
         class_name = args[0]
-        if class_name not in ["BaseModel", "Place", "State", "City", "Amenity", "Review"]:
+        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
+        if class_name not in arr:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
