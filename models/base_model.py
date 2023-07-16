@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 
 """
-base_model.py
+Module for the BaseModel class.
 
-This module defines the BaseModel class that serves as a base class for other classes.
+This module defines the BaseModel class, which is a base class that defines common
+attributes and methods for other classes.
 
 """
 
-
+from models import storage
 import uuid
 from datetime import datetime
 
@@ -22,8 +23,8 @@ class BaseModel:
     - updated_at: datetime - The datetime when an instance is last updated.
 
     Public instance methods:
-    - save(): Updates the public instance attribute updated_at with the current datetime.
-    - to_dict(): Returns a dictionary containing all keys/values of the instance.
+    - save(self): Updates the public instance attribute updated_at with the current datetime and calls the save() method of storage.
+    - to_dict(self): Returns a dictionary representation of the BaseModel instance.
 
     """
 
@@ -55,6 +56,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
+            storage.new(self)
 
     def __str__(self):
         """
@@ -70,10 +72,11 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the public instance attribute updated_at with the current datetime.
+        Updates the public instance attribute updated_at with the current datetime and calls the save() method of storage.
 
         """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
