@@ -92,6 +92,32 @@ class BaseModelTestCase(unittest.TestCase):
         self.assertIn(self.model.id, model_str)
         self.assertIn(str(self.model.__dict__), model_str)
 
+    def test_init_recreates_instance_from_dict(self):
+        """
+        Test that the __init__ method can recreate an instance from a dictionary representation.
+
+        """
+        model_dict = self.model.to_dict()
+        new_model = BaseModel(**model_dict)
+
+        self.assertEqual(new_model.id, self.model.id)
+        self.assertEqual(new_model.created_at, self.model.created_at)
+        self.assertEqual(new_model.updated_at, self.model.updated_at)
+
+    def test_init_recreates_instance_with_new_id_and_created_at(self):
+        """
+        Test that the __init__ method creates a new instance with a new id and created_at if not provided in the dictionary representation.
+
+        """
+        model_dict = self.model.to_dict()
+        model_dict.pop('id')
+        model_dict.pop('created_at')
+
+        new_model = BaseModel(**model_dict)
+
+        self.assertNotEqual(new_model.id, self.model.id)
+        self.assertIsInstance(new_model.id, str)
+
 
 if __name__ == '__main__':
     unittest.main()
