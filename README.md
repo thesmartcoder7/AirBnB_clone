@@ -34,6 +34,30 @@ Quit command to exit the program
 $
 ```
 
+But also in non-interactive model:
+```bash
+$ echo "help" | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+
+```
+
 ## Authors
 [Samuel Martins](https://github.com/thesmartcoder7)
 <br>
