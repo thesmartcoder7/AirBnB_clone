@@ -2,8 +2,9 @@
 """
 Module for the FileStorage class.
 
-This module defines the FileStorage class, which is responsible for serializing
-instances to a JSON file and deserializing JSON file to instances.
+This module defines the FileStorage class, which is responsible for
+serializing instances to a JSON file and deserializing JSON file to
+instances.
 
 """
 
@@ -12,7 +13,8 @@ import json
 
 class FileStorage:
     """
-    Serializes instances to a JSON file and deserializes JSON file to instances.
+    Serializes instances to a JSON file and deserializes JSON file to
+    instances.
 
     Private class attributes:
     - __file_path: string - path to the JSON file (ex: file.json)

@@ -3,8 +3,9 @@
 """
 Module for the BaseModel class.
 
-This module defines the BaseModel class, which is a base class that defines common
-attributes and methods for other classes.
+This module defines the BaseModel class, which is a
+base class that defines common attributes and methods for
+other classes.
 
 """
 
@@ -18,13 +19,16 @@ class BaseModel:
     A base class that defines common attributes and methods for other classes.
 
     Public instance attributes:
-    - id: string - A unique identifier assigned using uuid when an instance is created.
+    - id: string - A unique identifier assigned using uuid when an instance is
+    created.
     - created_at: datetime - The datetime when an instance is created.
     - updated_at: datetime - The datetime when an instance is last updated.
 
     Public instance methods:
-    - save(self): Updates the public instance attribute updated_at with the current datetime and calls the save() method of storage.
-    - to_dict(self): Returns a dictionary representation of the BaseModel instance.
+    - save(self): Updates the public instance attribute updated_at with the
+    current datetime and calls the save() method of storage.
+    - to_dict(self): Returns a dictionary representation of the BaseModel
+    instance.
 
     """
 
@@ -32,8 +36,9 @@ class BaseModel:
         """
         Initializes a new instance of the BaseModel class.
 
-        If kwargs is not empty, it recreates an instance using the dictionary representation.
-        Otherwise, it creates a new instance with a new id and created_at.
+        If kwargs is not empty, it recreates an instance using the dictionary
+        representation. Otherwise, it creates a new instance with a new id
+        and created_at.
 
         Args:
             *args: Not used.
@@ -72,7 +77,8 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the public instance attribute updated_at with the current datetime and calls the save() method of storage.
+        Updates the public instance attribute updated_at with the current
+        datetime and calls the save() method of storage.
 
         """
         self.updated_at = datetime.now()
@@ -82,8 +88,8 @@ class BaseModel:
         """
         Returns a dictionary representation of the BaseModel instance.
 
-        The dictionary contains all instance attributes, including the class name, id,
-        created_at, and updated_at attributes.
+        The dictionary contains all instance attributes, including the
+        class name, id, created_at, and updated_at attributes.
 
         Returns:
             dict: A dictionary representation of the BaseModel instance.
