@@ -1,3 +1,13 @@
+#!/usr/bin/python3
+
+"""
+base_model.py
+
+This module defines the BaseModel class that serves as a base class for other classes.
+
+"""
+
+
 import uuid
 from datetime import datetime
 
