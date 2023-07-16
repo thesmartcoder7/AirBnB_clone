@@ -27,6 +27,7 @@ class HBNBCommand(cmd.Cmd):
 
     """
 
+    arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
     prompt = "(hbnb) "
 
     def emptyline(self):
@@ -81,8 +82,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = arg
-        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
-        if class_name not in arr:
+        if class_name not in HBNBCommand.arr:
             print("** class doesn't exist **")
             return
         new_instance = eval(class_name)()
@@ -102,8 +102,7 @@ class HBNBCommand(cmd.Cmd):
             return
         args = arg.split()
         class_name = args[0]
-        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
-        if class_name not in arr:
+        if class_name not in HBNBCommand.arr:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -130,8 +129,7 @@ class HBNBCommand(cmd.Cmd):
             return
         args = arg.split()
         class_name = args[0]
-        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
-        if class_name not in arr:
+        if class_name not in HBNBCommand.arr:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -154,8 +152,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if arg:
             class_name = arg
-            arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
-            if class_name not in arr:
+            if class_name not in HBNBCommand.arr:
                 print("** class doesn't exist **")
                 return
             instances = [
@@ -180,8 +177,7 @@ class HBNBCommand(cmd.Cmd):
             return
         args = arg.split()
         class_name = args[0]
-        arr = ["BaseModel", "Place", "State", "City", "Amenity", "Review"]
-        if class_name not in arr:
+        if class_name not in HBNBCommand.arr:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -210,6 +206,25 @@ class HBNBCommand(cmd.Cmd):
 
         """
         pass
+
+    def do_all(self, arg):
+        """
+        Retrieve all instances of a class.
+
+        Usage: <class name>.all()
+
+        """
+        if not arg:
+            print("** class name missing **")
+            return
+        class_name = arg.split('.')[0]
+        if class_name not in HBNBCommand.arr:
+            print("** class doesn't exist **")
+            return
+        instances = storage.all().values()
+        class_instances = [str(instance) for instance in instances if type(
+            instance).__name__ == class_name]
+        print(class_instances)
 
 
 if __name__ == '__main__':
