@@ -35,7 +35,8 @@ class FileStorageTestCase(unittest.TestCase):
 
     def test_all_empty(self):
         """
-        Test that the all() method returns an empty dictionary when there are no objects in storage.
+        Test that the all() method returns an empty dictionary
+        when there are no objects in storage.
 
         """
         objects = self.storage.all()

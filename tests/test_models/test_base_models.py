@@ -34,14 +34,16 @@ class BaseModelTestCase(unittest.TestCase):
 
     def test_created_at_is_datetime(self):
         """
-        Test that the created_at attribute of BaseModel is an instance of datetime.
+        Test that the created_at attribute of BaseModel
+        is an instance of datetime.
 
         """
         self.assertIsInstance(self.model.created_at, datetime)
 
     def test_updated_at_is_datetime(self):
         """
-        Test that the updated_at attribute of BaseModel is an instance of datetime.
+        Test that the updated_at attribute of BaseModel
+        is an instance of datetime.
 
         """
         self.assertIsInstance(self.model.updated_at, datetime)
@@ -57,7 +59,8 @@ class BaseModelTestCase(unittest.TestCase):
 
     def test_to_dict_contains_class_name(self):
         """
-        Test that the to_dict() method contains the class name in the returned dictionary.
+        Test that the to_dict() method contains the class name
+        in the returned dictionary.
 
         """
         obj_dict = self.model.to_dict()
@@ -66,7 +69,8 @@ class BaseModelTestCase(unittest.TestCase):
 
     def test_to_dict_contains_created_at(self):
         """
-        Test that the to_dict() method contains the created_at attribute in the returned dictionary.
+        Test that the to_dict() method contains the created_at attribute
+        in the returned dictionary.
 
         """
         obj_dict = self.model.to_dict()
@@ -76,7 +80,8 @@ class BaseModelTestCase(unittest.TestCase):
 
     def test_to_dict_contains_updated_at(self):
         """
-        Test that the to_dict() method contains the updated_at attribute in the returned dictionary.
+        Test that the to_dict() method contains the updated_at attribute
+        in the returned dictionary.
 
         """
         obj_dict = self.model.to_dict()
@@ -96,7 +101,8 @@ class BaseModelTestCase(unittest.TestCase):
 
     def test_init_recreates_instance_from_dict(self):
         """
-        Test that the __init__ method can recreate an instance from a dictionary representation.
+        Test that the __init__ method can recreate an instance from
+        a dictionary representation.
 
         """
         model_dict = self.model.to_dict()
@@ -108,7 +114,8 @@ class BaseModelTestCase(unittest.TestCase):
 
     def test_init_recreates_instance_with_new_id_and_created_at(self):
         """
-        Test that the __init__ method creates a new instance with a new id and created_at if not provided in the dictionary representation.
+        Test that the __init__ method creates a new instance with a new id
+        and created_at if not provided in the dictionary representation.
 
         """
         model_dict = self.model.to_dict()
