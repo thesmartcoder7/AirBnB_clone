@@ -9,6 +9,7 @@ instances.
 """
 
 import json
+from os.path import exists
 
 
 class FileStorage:
@@ -64,19 +65,15 @@ class FileStorage:
             json.dump(serialized_objects, file)
 
     def reload(self):
-        """
-        Deserializes the JSON file to __objects.
+        """deserializes the JSON file to __objects"""
+        from models.base_model import BaseModel
+        from models.user import User
 
-        """
-        try:
-            with open(self.__file_path, "r") as file:
-                serialized_objects = json.load(file)
-                for key, value in serialized_objects.items():
-                    class_name, obj_id = key.split('.')
-                    module = __import__(
-                        'models.' 'base_model', fromlist=[class_name])
-                    class_ = getattr(module, class_name)
-                    obj_instance = class_(**value)
-                    self.__objects[key] = obj_instance
-        except FileNotFoundError:
-            pass
+        if exists(self.__file_path):
+            with open(self.__file_path) as jsonfile:
+                decereal = json.load(jsonfile)
+            for keys in decereal.keys():
+                if decereal[keys]['__class__'] == "BaseModel":
+                    self.__objects[keys] = BaseModel(**decereal[keys])
+                elif decereal[keys]['__class__'] == "User":
+                    self.__objects[keys] = User(**decereal[keys])
