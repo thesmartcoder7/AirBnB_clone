@@ -68,6 +68,11 @@ class FileStorage:
         """deserializes the JSON file to __objects"""
         from models.base_model import BaseModel
         from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
 
         if exists(self.__file_path):
             with open(self.__file_path) as jsonfile:
@@ -77,3 +82,15 @@ class FileStorage:
                     self.__objects[keys] = BaseModel(**decereal[keys])
                 elif decereal[keys]['__class__'] == "User":
                     self.__objects[keys] = User(**decereal[keys])
+                elif decereal[keys]['__class__'] == "State":
+                    self.__objects[keys] = State(**decereal[keys])
+                elif decereal[keys]['__class__'] == "City":
+                    self.__objects[keys] = City(**decereal[keys])
+                elif decereal[keys]['__class__'] == "Amenity":
+                    self.__objects[keys] = Amenity(**decereal[keys])
+                elif decereal[keys]['__class__'] == "Place":
+                    self.__objects[keys] = Place(**decereal[keys])
+                elif decereal[keys]['__class__'] == "Review":
+                    self.__objects[keys] = Review(**decereal[keys])
+                else:
+                    ...
