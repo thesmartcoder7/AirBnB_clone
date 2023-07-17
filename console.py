@@ -226,7 +226,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, argv):
         """
         Update an instance based on the class name and id by adding
-        or updating attribute.
+        or updating attributes.
 
         Args:
             argv (str): The argument.
@@ -237,7 +237,6 @@ class HBNBCommand(cmd.Cmd):
             if len(arg_list) == 1:
                 print("** instance id missing **")
             else:
-                # instance_id = "{}.{}".format(arg_list[0], arg_list[1])
                 instance_id = arg_list[1]
                 if instance_id in self.storage.all():
                     if len(arg_list) == 2:
@@ -246,11 +245,14 @@ class HBNBCommand(cmd.Cmd):
                         print("** value missing **")
                     else:
                         obj = self.storage.all()[instance_id]
-                        if arg_list[2] in type(obj).__dict__:
-                            v_type = type(obj.__class__.__dict__[arg_list[2]])
-                            setattr(obj, arg_list[2], v_type(arg_list[3]))
-                        else:
-                            setattr(obj, arg_list[2], arg_list[3])
+                        attr_dict = eval(arg_list[3])
+                        for key, value in attr_dict.items():
+                            if key != "__class__":
+                                if key in type(obj).__dict__:
+                                    v_type = type(obj.__class__.__dict__[key])
+                                    setattr(obj, key, v_type(value))
+                                else:
+                                    setattr(obj, key, value)
                 else:
                     print("** no instance found **")
 
