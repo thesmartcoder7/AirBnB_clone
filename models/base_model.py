@@ -1,102 +1,66 @@
 #!/usr/bin/python3
-
-"""
-Module for the BaseModel class.
-
-This module defines the BaseModel class, which is a
-base class that defines common attributes and methods for
-other classes.
-
+"""Module representing class BaseModel that defines all
+common attributes methods for other classes
 """
 
-from models import storage
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
-    """
-    A base class that defines common attributes and methods for other classes.
-
-    Public instance attributes:
-    - id: string - A unique identifier assigned using uuid when an instance is
-    created.
-    - created_at: datetime - The datetime when an instance is created.
-    - updated_at: datetime - The datetime when an instance is last updated.
-
-    Public instance methods:
-    - save(self): Updates the public instance attribute updated_at with the
-    current datetime and calls the save() method of storage.
-    - to_dict(self): Returns a dictionary representation of the BaseModel
-    instance.
-
-    """
+    """Base class from which other classes can inherite"""
 
     def __init__(self, *args, **kwargs):
-        """
-        Initializes a new instance of the BaseModel class.
-
-        If kwargs is not empty, it recreates an instance using the dictionary
-        representation. Otherwise, it creates a new instance with a new id
-        and created_at.
-
+        """class constructor method for creating objects
         Args:
-            *args: Not used.
-            **kwargs: A dictionary representing the instance attributes.
-
+             id (str): assign with an uuid when an instance is created
+             created_at (date): assign with the current datetime when an
+                               instance is created
+             updated_at (date): assign with the current datetime when an
+                                instance is created and it will be updated
+                                every time you change your object
+             *args : variable length argument list
+             **kwargs : Arbitrary keyword arguement
         """
-        if kwargs:
-            if 'id' not in kwargs:
-                kwargs['id'] = str(uuid.uuid4())
-            if 'created_at' in kwargs:
-                kwargs['created_at'] = datetime.strptime(
-                    kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
-            if 'updated_at' in kwargs:
-                kwargs['updated_at'] = datetime.strptime(
-                    kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
-            for key, value in kwargs.items():
-                if key != '__class__':
-                    setattr(self, key, value)
-        else:
+        if len(kwargs) == 0:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            self.updated_at = self.created_at
-            storage.new(self)
+            self.updated_at = datetime.now()
+        else:
+            for key, value in kwargs.items():
+                if "__class__" not in key:
+                    setattr(self, key, value)
+                else:
+                    if key == "created_at" or key_inside == "updated_at":
+                        date_format = "%Y-%m-%dT%H:%M:%S.%f"
+                        datetime_object = datetime.strptime(
+                            value, date_format)
+                        setattr(self, key, datetime_object)
 
     def __str__(self):
-        """
-        Returns a string representation of the BaseModel instance.
-
-        The string includes the class name, id, and instance attributes.
+        """Method that prints string representation of Basemodel
+        in the format [<class name>] (<self.id>) <self.__dict__>
 
         Returns:
-            str: A string representation of the BaseModel instance.
-
+                return formatted string if succesful
         """
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        return
+        "[{}] {} {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
-        """
-        Updates the public instance attribute updated_at with the current
-        datetime and calls the save() method of storage.
-
+        """Method that pdates the public instance attribute updated_at
+        with the current datetime
         """
         self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
+        """Method returns a dictionary containing all keys/values of
+        __dict__ of the instance
         """
-        Returns a dictionary representation of the BaseModel instance.
-
-        The dictionary contains all instance attributes, including the
-        class name, id, created_at, and updated_at attributes.
-
-        Returns:
-            dict: A dictionary representation of the BaseModel instance.
-
-        """
-        obj_dict = self.__dict__.copy()
-        obj_dict['__class__'] = self.__class__.__name__
-        obj_dict['created_at'] = self.created_at.isoformat()
-        obj_dict['updated_at'] = self.updated_at.isoformat()
-        return obj_dict
+        my_dict = dict(self.__dict__)
+        my_dict["__class__"] = self.__class__.__name__
+        my_dict["created_at"] = self.created_at.isoformat()
+        my_dict["updated_at"] = self.updated_at.isoformat()
+        return my_dict
