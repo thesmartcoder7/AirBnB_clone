@@ -232,28 +232,47 @@ class HBNBCommand(cmd.Cmd):
             argv (str): The argument.
 
         """
-        arg_list = check_args(argv)
-        if arg_list:
-            if len(arg_list) == 1:
-                print("** instance id missing **")
-            else:
-                instance_id = "{}.{}".format(arg_list[0], arg_list[1])
-                if instance_id in self.storage.all():
-                    if len(arg_list) == 2:
-                        print("** attribute name missing **")
-                    elif len(arg_list) == 3:
-                        print("** value missing **")
-                    else:
-                        obj = self.storage.all()[instance_id]
-                        if arg_list[2] in type(obj).__dict__:
-                            v_type = type(obj.__class__.__dict__[arg_list[2]])
-                            setattr(obj, arg_list[2], v_type(arg_list[3]))
-                        else:
-                            setattr(obj, arg_list[2], arg_list[3])
-                else:
-                    print("** no instance found **")
+        arg_list = HBNBCommand.parse(argv)
+        objdict = models.storage.all()
 
-            self.storage.save()
+        if len(arg_list) == 0:
+            print("** class name missing **")
+            return False
+        if arg_list[0] not in HBNBCommand.__class_lst:
+            print("** class doesn't exist **")
+            return False
+        if len(arg_list) == 1:
+            print("** instance id missing **")
+            return False
+        if "{}.{}".format(arg_list[0], arg_list[1]) not in objdict.keys():
+            print("** no instance found **")
+            return False
+        if len(arg_list) == 2:
+            print("** attribute name missing **")
+            return False
+        if len(arg_list) == 3:
+            try:
+                type(eval(arg_list[2])) != dict
+            except NameError:
+                print("** value missing **")
+                return False
+        if len(arg_list) == 4:
+            obj = objdict["{}.{}".format(arg_list[0], arg_list[1])]
+            if arg_list[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[arg_list[2]])
+                obj.__dict__[arg_list[2]] = valtype(arg_list[3])
+            else:
+                obj.__dict__[arg_list[2]] = arg_list[3]
+        elif type(eval(arg_list[2])) == dict:
+            obj = objdict["{}.{}".format(arg_list[0], arg_list[1])]
+            for k, v in eval(arg_list[2]).items():
+                if (k in obj.__class__.__dict__.keys() and type(
+                        obj.__class__.__dict__[k]) in {str, int, float}):
+                    valtype = type(obj.__class__.__dict__[k])
+                    obj.__dict__[k] = valtype(v)
+                else:
+                    obj.__dict__[k] = v
+        models.storage.save()
 
     def do_count(self, arg):
         """
