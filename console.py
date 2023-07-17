@@ -237,7 +237,8 @@ class HBNBCommand(cmd.Cmd):
             if len(arg_list) == 1:
                 print("** instance id missing **")
             else:
-                instance_id = "{}.{}".format(arg_list[0], arg_list[1])
+                # instance_id = "{}.{}".format(arg_list[0], arg_list[1])
+                instance_id = arg_list[1]
                 if instance_id in self.storage.all():
                     if len(arg_list) == 2:
                         print("** attribute name missing **")
